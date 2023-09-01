@@ -6,7 +6,7 @@ stock_symbols = ["TTEN3.SA", "ABCB4.SA", "BMOB3.SA", "AGRO3.SA", "ENAT3.SA", "EZ
 ibovespa_symbol = "^BVSP"
 
 def track_stock_price(stock_symbols):
-
+    
     stock_list_size = len(stock_symbols)
 
     while True:
@@ -15,9 +15,9 @@ def track_stock_price(stock_symbols):
 
             for stock_symbol in stock_symbols:
                 stock = yf.Ticker(stock_symbol)
-                stock_data = stock.history(period="1d")
-                open_price = stock_data["Open"].iloc[-1]
-                current_price = stock_data["Close"].iloc[-1]
+                stock_data = stock.history(period="2d")
+                open_price = stock_data["Close"].iloc[0]
+                current_price = stock_data["Close"].iloc[1]
 
                 variation = (current_price - open_price) / open_price
                 volatility += variation
@@ -27,9 +27,9 @@ def track_stock_price(stock_symbols):
             print(f'Index volatility = {volatility * 100:.2f}%')
 
             stock = yf.Ticker(ibovespa_symbol)
-            stock_data = stock.history(period="1d")
-            open_price = stock_data["Open"].iloc[-1]
-            current_price = stock_data["Close"].iloc[-1]
+            stock_data = stock.history(period="2d")
+            open_price = stock_data["Close"].iloc[0]
+            current_price = stock_data["Close"].iloc[1]
 
             variation = (current_price - open_price) / open_price
             print(f'IBOV variation = {variation * 100:.2f}%')
